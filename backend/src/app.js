@@ -10,7 +10,16 @@ import { configurePassport } from './config/auth/passportAuth';
 dotenv.config();
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3001',
+    process.env.FRONTEND_URL  
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+app.options('*', cors());
 app.use(express.json());
 
 // Configura Passport y las sesiones
